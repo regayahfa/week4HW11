@@ -1,0 +1,59 @@
+# DDL-create
+create database store;
+
+create table countries(
+    code int primary key ,
+    name varchar(20) unique ,
+    constraint_name varchar(20)not null
+);
+
+create table users(
+    id int primary key ,
+    full_name varchar(20) unique ,
+    email varchar(20) unique ,
+    gender char(1)check ( 'm'or'f' ),
+    date_of_birth varchar(15),
+    created_at datetime ,
+    countries_code int ,
+    foreign key (countries_code)references countries(code)
+);
+
+create table orders(
+    id int primary key ,
+    status varchar(6)check ( 'start'or 'finish') ,
+   created_at datetime,
+   user_id int ,
+    foreign key (user_id)references users(id)
+);
+
+create table order_products(
+   quantity int default 0,
+   order_id int ,
+    foreign key (order_id)references orders(id),
+product_id int ,
+    foreign key (product_id)references products(id)
+);
+
+create table products(
+    id int primary key ,
+    name varchar(10)not null ,
+    price int default 0,
+    status varchar(10)check ( 'valid'or 'expired'),
+    created_at datetime default current_timestamp
+);
+
+
+#DML -Insert
+insert into countries values (1,'saudi','Asia');
+insert into users values (12,'regayah','regayah@gmail.com','m','1990',12,1);
+insert into orders values (3,'start',2020,12);
+insert into products values (4,'notebook',15,'valid',2020);
+insert into order_products values (10,3,4);
+
+
+
+#DML-update
+update countries set name='china' where code=1;ta
+
+#DML-Delete
+delete from products where id=4;
